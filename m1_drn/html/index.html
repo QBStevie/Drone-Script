@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Drone HUD</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <audio id="drone-sound" src="drone.mp3" loop preload="auto"></audio>
+
+  <div id="hud" class="hidden">
+
+    <div id="top-left">
+      <div id="resolution">HD 1280×720 30FPS</div>
+      <div id="recording">
+        <span class="red-dot"></span>
+        <span id="rec-label">REC</span>
+        <span id="rec-timer">00:00:00</span>
+      </div>
+    </div>
+
+    <div id="top-right">
+      <div id="signal-container">
+        <div id="signal-bar"><div id="signal-fill"></div></div>
+        <div id="signal">100%</div>
+      </div>
+    </div>
+
+    <div id="telemetry">
+      <div><strong>Speed H</strong> <span id="speed-h">0</span> KM/H</div>
+      <div><strong>Speed V</strong> <span id="speed-v">0</span> KM/H</div>
+      <div><strong>Alt</strong> <span id="altitude">0</span> m</div>
+      <div><strong>Dist</strong> <span id="distance">0</span> m</div>
+      <div><strong>Coord</strong> <span id="coords">0.00,0.00</span></div>
+    </div>
+
+    <div id="crosshair"></div>
+    <div id="info-panel"></div>
+
+    <div id="filters">
+      <button id="flt-nrm" class="flt active">NRM</button>
+      <button id="flt-ngtv" class="flt">NGTV</button>
+      <button id="flt-thrml" class="flt">THRML</button>
+    </div>
+
+
+    <div id="staticOverlay"></div>
+    <div id="tvOverlay"></div>
+  </div>
+
+  <script src="drone.js"></script>
+</body>
+</html>
