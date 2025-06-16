@@ -1,13 +1,5 @@
 ESX = exports['es_extended']:getSharedObject()
 
-ESX.RegisterServerCallback('drone:getPlateInfo', function(source, cb, plate)
-  MySQL.Async.fetchAll('SELECT owner_name FROM owned_vehicles WHERE plate = @plate', {
-    ['@plate'] = plate
-  }, function(results)
-    local owner = (results[1] and results[1].owner_name) or 'Unknown'
-    cb({ owner = owner })
-  end)
-end)
 
 ESX.RegisterServerCallback('drone:getPlayerInfo', function(source, cb, targetId)
   local xPlayer = ESX.GetPlayerFromId(targetId)
@@ -21,6 +13,29 @@ ESX.RegisterServerCallback('drone:getPlayerInfo', function(source, cb, targetId)
     cb(nil)
   end
 end)
+
+local lastTase = {}
+
+RegisterNetEvent('m1_drn:serverRequestTase', function(targetNetId)
+  local src = source
+  local now = os.time()
+  local xSource = ESX.GetPlayerFromId(src)
+
+  if not xSource or xSource.job.name ~= 'police' then
+    TriggerClientEvent('m1_drn:clientNotify', src, 'You do not have permission to use the taser.')
+    return
+  end
+
+  if lastTase[src] and now - lastTase[src] < 10 then
+    TriggerClientEvent('m1_drn:clientNotify', src, 'Taser recharging, please wait.')
+    return
+  end
+
+  lastTase[src] = now
+
+  TriggerClientEvent('m1_drn:clientApplyTase', -1, targetNetId)
+end)
+
 
 RegisterNetEvent('m1_drn:serverDroneDropped', function(netId)
   TriggerClientEvent('m1_drn:clientDroneDropped', -1, netId)
