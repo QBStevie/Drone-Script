@@ -260,7 +260,9 @@ function ActivateDrone()
   end)
 end
 
-RegisterCommand('toggledrone', function()
+
+-- This is for testing/adding the drone to inv can comment this out.
+ RegisterCommand('toggledrone', function()
   local ped, ppos = PlayerPedId(), GetEntityCoords(PlayerPedId())
   local picked = false
 
