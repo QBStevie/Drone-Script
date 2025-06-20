@@ -44,3 +44,16 @@ end)
 RegisterNetEvent('m1_drn:serverDronePickedUp', function(netId)
   TriggerClientEvent('m1_drn:clientDroneRemoved', -1, netId)
 end)
+
+ESX.RegisterServerCallback('m1_drn:getPlayerInfo', function(source, cb, targetId)
+  local xPlayer = ESX.GetPlayerFromId(targetId)
+  if xPlayer then
+    cb({
+      name = xPlayer.getName(),
+      dob  = xPlayer.get('dob'),
+      job  = xPlayer.job.label
+    })
+  else
+    cb(nil)
+  end
+end)
